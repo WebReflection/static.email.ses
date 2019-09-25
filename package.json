@@ -25,6 +25,7 @@
   "dependencies": {
     "aws-sdk": "^2.535.0",
     "escape-string-regexp": "^2.0.0",
+    "faroff": "0.0.4",
     "marked": "^0.7.0"
   },
   "repository": {
