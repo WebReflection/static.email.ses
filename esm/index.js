@@ -102,23 +102,23 @@ export const create = ({
       };
 
       if (RECAPTCHA) {
-        post('https://www.google.com/recaptcha/api/siteverify', {
-          query: {
-            secret: recaptcha,
-            response: body.recaptcha,
-            remoteip: request.headers['x-forwarded-for'] || 
-                      request.connection.remoteAddress
-          }
-        }).then(
+        const query = {
+          secret: recaptcha,
+          response: body.recaptcha,
+          remoteip: request.headers['x-forwarded-for'] ||
+                    request.connection.remoteAddress
+        };
+        post('https://www.google.com/recaptcha/api/siteverify', {query}).then(
           result => {
-            if (result.success)
+            if (result.json && result.json.success)
               send();
             else {
-              if (LOG) console.error(result);
+              if (LOG) console.error(query, result);
               end(response, 403);
             }
           },
           error => {
+            if (LOG) console.error(query, error);
             end(response, 500);
           }
         );
