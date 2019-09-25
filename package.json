@@ -1,0 +1,23 @@
+{
+  "name": "static.email.ses",
+  "version": "0.0.0",
+  "description": "A Zeit Now AWS SES Based Serverless Utility",
+  "main": "cjs/index.js",
+  "scripts": {
+    "build": "npm run cjs && npm run test",
+    "cjs": "ascjs esm cjs",
+    "test": "node test/index.js"
+  },
+  "keywords": ["static", "email", "AWS", "SES", "zeit", "now"],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "devDependencies": {
+    "ascjs": "^3.0.1"
+  },
+  "module": "esm/index.js",
+  "dependencies": {
+    "aws-sdk": "^2.535.0",
+    "escape-string-regexp": "^2.0.0",
+    "marked": "^0.7.0"
+  }
+}
