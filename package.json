@@ -8,7 +8,14 @@
     "cjs": "ascjs esm cjs",
     "test": "node test/index.js"
   },
-  "keywords": ["static", "email", "AWS", "SES", "zeit", "now"],
+  "keywords": [
+    "static",
+    "email",
+    "AWS",
+    "SES",
+    "zeit",
+    "now"
+  ],
   "author": "Andrea Giammarchi",
   "license": "ISC",
   "devDependencies": {
@@ -19,5 +26,13 @@
     "aws-sdk": "^2.535.0",
     "escape-string-regexp": "^2.0.0",
     "marked": "^0.7.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/static.email.ses.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WebReflection/static.email.ses/issues"
+  },
+  "homepage": "https://github.com/WebReflection/static.email.ses#readme"
 }
