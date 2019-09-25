@@ -1,6 +1,6 @@
 # A Zeit Now AWS SES Based Serverless Utility
 
-Usable as path for [static.email](https://github.com/WebReflection/static.email#readme) client side utility.
+Usable as `path` for [static.email](https://github.com/WebReflection/static.email#readme) client side utility.
 
 ```js
 const {create} = require('static.email.ses');
