@@ -1,10 +1,13 @@
 'use strict';
+const https = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('https'));
+
 const AWS = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('aws-sdk'));
-const {post} = require('faroff');
 const marked = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('marked'));
 const safe = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('escape-string-regexp'));
+const URLSearchParams = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/url-search-params'));
 
 const {isArray} = Array;
+const {parse} = JSON;
 const {keys} = Object;
 
 const statuses = {
@@ -109,20 +112,39 @@ const create = ({
           remoteip: request.headers['x-forwarded-for'] ||
                     request.connection.remoteAddress
         };
-        post('https://www.google.com/recaptcha/api/siteverify', {query}).then(
-          result => {
-            if (result.json && result.json.success)
-              send();
-            else {
-              if (LOG) console.error(query, result);
-              end(response, 403);
-            }
+        const fail = error => {
+          if (LOG) console.error(query, error);
+          end(response, 500);
+        };
+        https.request(
+          {
+            method: 'POST',
+            hostname: 'www.google.com',
+            headers: {'user-agent': 'static.email.ses/0.1'},
+            path: '/recaptcha/api/siteverify?' + new URLSearchParams(query)
           },
-          error => {
-            if (LOG) console.error(query, error);
-            end(response, 500);
-          }
-        );
+          response => {
+            const data = [];
+            response
+              .setEncoding('utf8')
+              .on('error', fail)
+              .on('data', chunk => data.push(chunk))
+              .on('end', () => {
+                const result = data.join('');
+                try {
+                  if (!parse(result).success)
+                    throw 403;
+                  send();
+                }
+                catch (o_O) {
+                  if (LOG) console.error(query, result);
+                  end(response, 403);
+                }
+              });
+            }
+        )
+        .on('error', fail)
+        .end();
       }
       else
         send();
