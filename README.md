@@ -1,4 +1,4 @@
-# A Zeit Now AWS SES Based Serverless Utility
+# A Vercel/Zeit Now AWS SES Based Serverless Utility
 
 Usable as `path` for [static.email](https://github.com/WebReflection/static.email#readme) client side utility, as described in [this post](https://medium.com/@WebReflection/how-to-send-emails-from-static-websites-9a34ceb9416c).
 
