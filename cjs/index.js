@@ -61,10 +61,10 @@ const create = ({
       if (typeof body !== 'object')
         throw 400;
 
-      const details = keys(body);
-      if (RECAPTCHA && !details.includes('recaptcha') || !body.recaptcha)
+      if (RECAPTCHA && !body.recaptcha)
         throw 403;
 
+      const details = keys(body);
       const send = () => {
         const withText = details.includes('text');
         const withHTML = details.includes('html');
